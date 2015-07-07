@@ -4,6 +4,12 @@
 public class Eval {
     
     public static void main(String[] args) {
+        Eval e = new Eval();
+        String s = new String("343434^4594^5");
+        String s2 = new String("3^3^3");
+        //System.out.println(s.indexOf('3'));
+        System.out.println(e.evaluateSimple("2^2^2^2^2"));
+        //System.out.println(e.isInteger(s2.charAt(3)));
     }
     //evaluates the whole expression
     public String evaluateExpression(String expression) {
@@ -22,10 +28,65 @@ public class Eval {
         }
         return evaluateSimple(expression);
     }
+    //Checks if a String is an integer versus an operation
+    public boolean isInteger(char s) {
+        return s == '1' ||
+                s == '2' ||
+                s == '3' ||
+                s == '4' ||
+                s == '5'||
+                s == '6' ||
+                s == '7' ||
+                s == '8' ||
+                s == '9' ||
+                s == '0' ||
+                s == '.';
+                
+    }
     //FINISH THIS
-    private String evaluateSimple(String simple) {
-        // TODO Auto-generated method stub
-        return null;
+    public String evaluateSimple(String simple) {
+        
+        int exponent = simple.indexOf('^');
+        int addition = simple.indexOf('+');
+        int subtraction = simple.indexOf('-');
+        int multiplication = simple.indexOf('*');
+        int division = simple.indexOf('/');
+        int place = 0;
+        int place2 = simple.length();
+        
+       // System.out.println(simple);
+        
+        if (simple.contains("^")) {
+            for (int i = exponent - 1; i >= 0; i--) {
+                if (!isInteger(simple.charAt(i))) {
+                    //place = simple.indexOf(simple.charAt(i)) + 1;
+                    place = i;
+                    
+                }
+            }
+            for (int i = exponent + 1; i < simple.length(); i++) {
+                if (!isInteger(simple.charAt(i))) {
+                    //place2 = simple.indexOf(simple.charAt(i)) - 1;
+                    place2 = i;
+                    break;
+                }
+            }
+        }
+        else {
+            return simple;
+        }
+        //System.out.println(isInteger(simple.charAt(3)));
+        //System.out.println("Place: " + place + ". Exponent: " + exponent + ". Place 2: " + place2);
+        
+        String evaluated = Integer.toString((int)exponent(simple.substring(place, exponent), simple.substring(exponent+1, place2)));
+        String newString = simple.substring(0, place) + evaluated + simple.substring(place2, simple.length());
+        
+       return evaluateSimple(newString);
+        //return simple.substring(exponent+1, place2);
+       // return Integer.toString(place2);
+        //return Integer.toString((int)exponent(simple.substring(place, exponent),simple.substring(exponent+1, place2)));
+        //return newString;
+        
     }
     public String removeSpaces(String expression) {
         //finds the index of space
@@ -35,6 +96,7 @@ public class Eval {
             expression = expression.substring(0, spaceIndex) + 
                     expression.substring(spaceIndex + 1, expression.length());
         }
+        
         //returns the expression without spaces
         return expression;
     }
