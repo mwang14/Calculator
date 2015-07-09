@@ -5,11 +5,8 @@ public class Eval {
     
     public static void main(String[] args) {
         Eval e = new Eval();
-        String s = new String("343434^4594^5");
-        String s2 = new String("3^3^3");
-        //System.out.println(s.indexOf('3'));
-        System.out.println(e.evaluateSimple("2^2^2^2^2"));
-        //System.out.println(e.isInteger(s2.charAt(3)));
+        System.out.println(e.evaluateSimple("2*3-3"));
+        //System.out.println(e.evaluateExpression("(2-3)*(2-3)"));
     }
     //evaluates the whole expression
     public String evaluateExpression(String expression) {
@@ -54,38 +51,112 @@ public class Eval {
         int place = 0;
         int place2 = simple.length();
         
-       // System.out.println(simple);
+       //System.out.println(simple); <---uncomment this if you want to see the steps
         
         if (simple.contains("^")) {
             for (int i = exponent - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
-                    //place = simple.indexOf(simple.charAt(i)) + 1;
-                    place = i;
+                    place = i + 1;
                     
                 }
             }
             for (int i = exponent + 1; i < simple.length(); i++) {
                 if (!isInteger(simple.charAt(i))) {
-                    //place2 = simple.indexOf(simple.charAt(i)) - 1;
                     place2 = i;
                     break;
                 }
             }
+            String evaluated = Integer.toString((int)exponent(simple.substring(place, exponent), simple.substring(exponent+1, place2)));
+            String newString = simple.substring(0, place) + evaluated + simple.substring(place2, simple.length());
+            
+           return evaluateSimple(newString);
+            
+        }
+        else if (simple.contains("*")) {
+            for (int i = multiplication - 1; i >= 0; i--) {
+                if (!isInteger(simple.charAt(i))) {
+                    place = i;
+                    break;
+                }
+            }
+            for (int i = multiplication + 1; i < simple.length(); i++) {
+                if (!isInteger(simple.charAt(i))) {
+                    place2 = i;
+                    break;
+                }
+
+            
+        }
+            String evaluated = Integer.toString((int)multiply(simple.substring(place, multiplication), simple.substring(multiplication+1, place2)));
+            String newString = simple.substring(0, place) + evaluated + simple.substring(place2, simple.length());
+            
+           return evaluateSimple(newString);
+        }
+        else if (simple.contains("/")) {
+            for (int i = division - 1; i >= 0; i--) {
+                if (!isInteger(simple.charAt(i))) {
+                    place = i;
+                    break;
+                }
+            }
+            for (int i = division + 1; i < simple.length(); i++) {
+                if (!isInteger(simple.charAt(i))) {
+                    place2 = i;
+                    break;
+                }
+
+            
+        }
+            String evaluated = Integer.toString((int)divide(simple.substring(place, division), simple.substring(division+1, place2)));
+            String newString = simple.substring(0, place) + evaluated + simple.substring(place2, simple.length());
+            
+           return evaluateSimple(newString);
+        }
+        else if (simple.contains("+")) {
+            for (int i = addition - 1; i >= 0; i--) {
+                if (!isInteger(simple.charAt(i))) {
+                    place = i;
+                    break;
+                }
+            }
+            for (int i = addition + 1; i < simple.length(); i++) {
+                if (!isInteger(simple.charAt(i))) {
+                    place2 = i;
+                    break;
+                }
+
+            
+        }
+            String evaluated = Integer.toString((int)add(simple.substring(place, addition), simple.substring(addition+1, place2)));
+            String newString = simple.substring(0, place) + evaluated + simple.substring(place2, simple.length());
+            
+           return evaluateSimple(newString);
+        }
+        else if (simple.contains("-")) {
+            for (int i = subtraction - 1; i >= 0; i--) {
+                if (!isInteger(simple.charAt(i))) {
+                    place = i;
+                    break;
+                }
+            }
+            for (int i = subtraction + 1; i < simple.length(); i++) {
+                if (!isInteger(simple.charAt(i))) {
+                    place2 = i;
+                    break;
+                }
+
+            
+        }
+            String evaluated = Integer.toString((int)subtract(simple.substring(place, subtraction), simple.substring(subtraction+1, place2)));
+            String newString = simple.substring(0, place) + evaluated + simple.substring(place2, simple.length());
+            
+           return evaluateSimple(newString);
+           
         }
         else {
             return simple;
         }
-        //System.out.println(isInteger(simple.charAt(3)));
-        //System.out.println("Place: " + place + ". Exponent: " + exponent + ". Place 2: " + place2);
-        
-        String evaluated = Integer.toString((int)exponent(simple.substring(place, exponent), simple.substring(exponent+1, place2)));
-        String newString = simple.substring(0, place) + evaluated + simple.substring(place2, simple.length());
-        
-       return evaluateSimple(newString);
-        //return simple.substring(exponent+1, place2);
-       // return Integer.toString(place2);
-        //return Integer.toString((int)exponent(simple.substring(place, exponent),simple.substring(exponent+1, place2)));
-        //return newString;
+
         
     }
     public String removeSpaces(String expression) {
