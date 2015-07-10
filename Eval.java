@@ -5,13 +5,22 @@ public class Eval {
     
     public static void main(String[] args) {
         Eval e = new Eval();
-        System.out.println(e.evaluateSimple("2*3-3"));
-        //System.out.println(e.evaluateExpression("(2-3)*(2-3)"));
+        String s = new String("1 + 1");
+        //System.out.println(e.evaluateSimple("2^2"));
+       // System.out.println(e.findOpeningParen("(3232)+(2323)+(4343)", 5));
+       System.out.println(e.evaluateExpression("(3+2) + (3+2)"));
+        //System.out.println("HiHi");
+        //System.out.println(e.removeSpaces("(3+2) + (3+2)"));
+        //System.out.println(e.evaluateSimple("1 + 1"));
+        //System.out.println(s.substring(2, 5));
     }
     //evaluates the whole expression
     public String evaluateExpression(String expression) {
         //current closing and opening paren indexes
+        expression = removeSpaces(expression);
+        System.out.println(expression);
         int close, open;
+        
         //finds the first closing paren
         close = findFirstClosingParen(expression);
         //while there is a closing paren
@@ -31,7 +40,7 @@ public class Eval {
                 s == '2' ||
                 s == '3' ||
                 s == '4' ||
-                s == '5'||
+                s == '5' ||
                 s == '6' ||
                 s == '7' ||
                 s == '8' ||
@@ -50,10 +59,9 @@ public class Eval {
         int division = simple.indexOf('/');
         int place = 0;
         int place2 = simple.length();
-        
-       //System.out.println(simple); <---uncomment this if you want to see the steps
-        
-        if (simple.contains("^")) {
+       // removeSpaces(simple);
+       //System.out.println(simple);
+    if (simple.contains("^")) {
             for (int i = exponent - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
                     place = i + 1;
@@ -161,11 +169,14 @@ public class Eval {
     }
     public String removeSpaces(String expression) {
         //finds the index of space
-        int spaceIndex = expression.indexOf(' ');
+        int spaceIndex = expression.indexOf(" ");
         while(spaceIndex != -1) {
+            
             //gets rid of the space at that index
+            System.out.println(expression);
             expression = expression.substring(0, spaceIndex) + 
-                    expression.substring(spaceIndex + 1, expression.length());
+                    expression.substring(spaceIndex + 1);
+            spaceIndex = expression.indexOf(" ");
         }
         
         //returns the expression without spaces
@@ -186,7 +197,7 @@ public class Eval {
     
     public int findOpeningParen(String s, int close) {
         //goes through string starting from closing paren
-        for(int i = close; i >= 0; i++) {
+        for(int i = close; i >= 0; i--) {
            char c = s.charAt(i);
            //returns the index if the character is found
            if(c == '(') {
