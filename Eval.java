@@ -8,7 +8,7 @@ public class Eval {
         String s = new String("1 + 1");
         //System.out.println(e.evaluateSimple("2^2"));
        // System.out.println(e.findOpeningParen("(3232)+(2323)+(4343)", 5));
-       System.out.println(e.evaluateExpression("(3+2) + (3+2)"));
+       System.out.println(e.evaluateExpression("(3 + (3 + 2^2*2) + 2) + (3+2)"));
         //System.out.println("HiHi");
         //System.out.println(e.removeSpaces("(3+2) + (3+2)"));
         //System.out.println(e.evaluateSimple("1 + 1"));
@@ -60,7 +60,7 @@ public class Eval {
         int place = 0;
         int place2 = simple.length();
        // removeSpaces(simple);
-       //System.out.println(simple);
+       System.out.println(simple);
     if (simple.contains("^")) {
             for (int i = exponent - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
@@ -83,7 +83,7 @@ public class Eval {
         else if (simple.contains("*")) {
             for (int i = multiplication - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
-                    place = i;
+                    place = i + 1;
                     break;
                 }
             }
@@ -103,7 +103,7 @@ public class Eval {
         else if (simple.contains("/")) {
             for (int i = division - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
-                    place = i;
+                    place = i + 1;
                     break;
                 }
             }
@@ -123,7 +123,7 @@ public class Eval {
         else if (simple.contains("+")) {
             for (int i = addition - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
-                    place = i;
+                    place = i + 1;
                     break;
                 }
             }
@@ -173,7 +173,7 @@ public class Eval {
         while(spaceIndex != -1) {
             
             //gets rid of the space at that index
-            System.out.println(expression);
+            //System.out.println(expression);
             expression = expression.substring(0, spaceIndex) + 
                     expression.substring(spaceIndex + 1);
             spaceIndex = expression.indexOf(" ");
