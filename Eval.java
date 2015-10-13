@@ -1,24 +1,24 @@
+import javax.swing.SwingUtilities;
+
 
 
 
 public class Eval {
     
     public static void main(String[] args) {
-        Eval e = new Eval();
-        String s = new String("1 + 1");
-        //System.out.println(e.evaluateSimple("2^2"));
-       // System.out.println(e.findOpeningParen("(3232)+(2323)+(4343)", 5));
-       System.out.println(e.evaluateExpression("(3 + (3 + 2^2*2) + 2) + (3+2)"));
-        //System.out.println("HiHi");
-        //System.out.println(e.removeSpaces("(3+2) + (3+2)"));
-        //System.out.println(e.evaluateSimple("1 + 1"));
-        //System.out.println(s.substring(2, 5));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Gridlayout();
+            }
+        });
+        
     }
     //evaluates the whole expression
     public String evaluateExpression(String expression) {
         //current closing and opening paren indexes
         expression = removeSpaces(expression);
-        System.out.println(expression);
+        //System.out.println(expression);
         int close, open;
         
         //finds the first closing paren
@@ -49,7 +49,7 @@ public class Eval {
                 s == '.';
                 
     }
-    //FINISH THIS
+    //Evaluate simple calculations within parenthesis
     public String evaluateSimple(String simple) {
         
         int exponent = simple.indexOf('^');
@@ -59,8 +59,7 @@ public class Eval {
         int division = simple.indexOf('/');
         int place = 0;
         int place2 = simple.length();
-       // removeSpaces(simple);
-       System.out.println(simple);
+        //evaluates exponents
     if (simple.contains("^")) {
             for (int i = exponent - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
@@ -80,6 +79,7 @@ public class Eval {
            return evaluateSimple(newString);
             
         }
+        //evaluates multiplication 
         else if (simple.contains("*")) {
             for (int i = multiplication - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
@@ -100,6 +100,7 @@ public class Eval {
             
            return evaluateSimple(newString);
         }
+        //evaluates division
         else if (simple.contains("/")) {
             for (int i = division - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
@@ -120,6 +121,7 @@ public class Eval {
             
            return evaluateSimple(newString);
         }
+    //Evaluates addition
         else if (simple.contains("+")) {
             for (int i = addition - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
@@ -140,6 +142,7 @@ public class Eval {
             
            return evaluateSimple(newString);
         }
+    //Evaluates subtraction
         else if (simple.contains("-")) {
             for (int i = subtraction - 1; i >= 0; i--) {
                 if (!isInteger(simple.charAt(i))) {
